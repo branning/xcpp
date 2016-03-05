@@ -1,16 +1,22 @@
 ---
 language: cpp
+os:
+  - linux
+  - osx
 compiler:
-- gcc
-- clang
+  - gcc
+  - clang
 before_install:
 - sudo add-apt-repository -y ppa:kalakris/cmake
 - sudo add-apt-repository -y ppa:boost-latest/ppa
 - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 - sudo apt-get -qq -d update
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 install:
-- sudo apt-get -qq install libboost1.55-all-dev cmake g++-4.8
-- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt-get -qq install libboost1.55-all-dev cmake g++-4.8; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install homebrew/versions/gcc48; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install homebrew/versions/boost155; fi
 script:
 - bin/fetch-configlet
 - bin/configlet .
