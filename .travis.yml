@@ -2,20 +2,19 @@
 language: cpp
 os:
   - linux
-    sudo: required
   - osx
 compiler:
   - gcc
   - clang
 before_install:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then add-apt-repository -y ppa:kalakris/cmake; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository -y ppa:kalakris/cmake; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository -y ppa:boost-latest/ppa; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt-get -qq -d update; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq -d update; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 install:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt-get -qq install libboost1.55-all-dev cmake g++-4.8; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq install libboost1.55-all-dev cmake g++-4.8; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install homebrew/versions/gcc48; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install homebrew/versions/boost155; fi
 script:
